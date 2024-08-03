@@ -12,7 +12,7 @@ public:
 
 private:
     static const int m_boardSize = 8;
-    const int m_maxBombs = 10;
+    const int m_maxMines = 10;
 
     Tile m_board[m_boardSize][m_boardSize];
 };

@@ -1,7 +1,7 @@
 #include "tile.hpp"
 
 std::ostream& operator<<(std::ostream& out, const Tile& t) {
-    if (t.isBomb())
+    if (t.isMine())
         return out << "*";
 
     if (t.isEmpty())

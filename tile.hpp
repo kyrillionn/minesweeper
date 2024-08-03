@@ -4,17 +4,17 @@
 
 class Tile {
 public:
-    Tile(int num) : m_numOfBombs {num} {}
+    Tile(int num) : m_numOfMines {num} {}
 
     Tile() = default;
 
-    int getNum() const { return m_numOfBombs; }
-    void setNum(int num) { m_numOfBombs = num; }
-    bool isBomb() const { return m_numOfBombs == -1; } // -1 will indicate that a tile contains a bomb.
-    bool isEmpty() const { return m_numOfBombs == 0; }
+    int getNum() const { return m_numOfMines; }
+    void setNum(int num) { m_numOfMines = num; }
+    bool isMine() const { return m_numOfMines == -1; } // -1 will indicate that a tile contains a mine.
+    bool isEmpty() const { return m_numOfMines == 0; }
 
     friend std::ostream& operator<<(std::ostream& out, const Tile& t);
 
 private:
-    int m_numOfBombs = 0;
+    int m_numOfMines = 0;
 };
