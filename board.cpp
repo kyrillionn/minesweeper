@@ -1,4 +1,5 @@
 #include "board.hpp"
+#include "point.hpp"
 
 std::ostream& operator<<(std::ostream& out, const Board& b) {
     for (const auto& row : b.m_board) {
@@ -12,6 +13,13 @@ std::ostream& operator<<(std::ostream& out, const Board& b) {
 }
 
 void Board::randomize() {
-    for (auto& i : m_board)
-        i->setNum(-1);
+    for (int mineCount = 0; mineCount < m_maxMines; ++mineCount) {
+        Point randPoint = Point::generateRandomPoint();
+        Tile& tile = m_board[randPoint.getX()][randPoint.getY()];
+
+        if (tile.isEmpty())
+            tile.setNum(-1);
+        else
+            --mineCount; // Don't increment the counter if a mine didn't get placed. 
+    }
 }
