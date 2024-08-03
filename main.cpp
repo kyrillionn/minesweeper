@@ -1,7 +1,11 @@
+#include "board.hpp"
+
 #include <iostream>
 
 int main() {
-    std::cout << "Hello World!";
+    Board b;
+
+    std::cout << b;
 
     return 0;
 }
