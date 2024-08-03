@@ -33,3 +33,6 @@
 
 # VSCode stuff
 .vscode/
+
+# Misc
+tasks.txt
