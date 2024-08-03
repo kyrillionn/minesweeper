@@ -1,5 +1,4 @@
-#ifndef RANDOM_MT_H
-#define RANDOM_MT_H
+#pragma once
 
 #include <chrono>
 #include <random>
@@ -67,5 +66,3 @@ namespace Random
 		return get<R>(static_cast<R>(min), static_cast<R>(max));
 	}
 }
-
-#endif
