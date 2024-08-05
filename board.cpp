@@ -32,3 +32,19 @@ void Board::randomize() {
             --mineCount; // Don't increment the counter if a mine didn't get placed. 
     }
 }
+
+int Board::revealTiles(const Point& p) {
+    Tile& t = m_board[p.getX()][p.getY()];
+
+    t.setHidden(false);
+
+    if (t.getNum() == -1)
+        return -1;
+    
+    if (t.getNum())
+        return t.getNum();
+
+    // figure out how to reveal all adjacent empty tiles
+
+    return 0;
+}
