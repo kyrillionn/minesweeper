@@ -2,9 +2,18 @@
 #include "point.hpp"
 
 std::ostream& operator<<(std::ostream& out, const Board& b) {
-    for (const auto& row : b.m_board) {
-        for (const auto& t : row)
-            out << t << " ";
+    out << "   ";
+
+    for (int i = 0; i < b.getBoardSize(); ++i)
+        out << i << " ";
+
+    out << "\n\n";
+
+    for (int i = 0; i < b.getBoardSize(); ++i) {
+        out << i << "  ";
+
+        for (int j = 0; j < b.getBoardSize(); ++j)
+            out << b.m_board[i][j] << " ";
 
         out << "\n";
     }
