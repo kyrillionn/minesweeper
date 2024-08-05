@@ -10,6 +10,7 @@ public:
     void randomize();
     static int getBoardSize() { return m_boardSize; };
     static int getMaxMines() { return m_maxMines; };
+    int revealTiles(const Point& p);
 
     friend std::ostream& operator<<(std::ostream& out, const Board& b);
 
