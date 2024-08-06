@@ -1,10 +1,14 @@
 #pragma once
 
+#include "direction.hpp"
+
 class Point {
 public:
     Point(int x = 0, int y = 0) : m_x {x}, m_y {y} {}
 
     static Point generateRandomPoint();
+    bool isValid() const;
+    Point getAdjacentPoint(const Direction& dir) const;
 
     friend bool operator==(const Point& p1, const Point& p2);
 
