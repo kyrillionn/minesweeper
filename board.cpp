@@ -34,7 +34,26 @@ void Board::randomize() {
     }
 }
 
-void Board::setTileNumbers() {
+void Board::setNumbers(const Point& adjPoint, Tile& currentTile) {
+    if (adjPoint.isValid()) {
+        Tile& adjTile = m_board[adjPoint.getX()][adjPoint.getY()];
+
+        if (adjTile.isMine() && !currentTile.isMine())
+            currentTile.setNum(currentTile.getNum() + 1);
+    }
+}
+
+void Board::findAdjacentEmptyTiles(const Point& adjPoint, Tile& currentTile) {
+    while (adjPoint.isValid()) {
+        Tile& adjTile = m_board[adjPoint.getX()][adjPoint.getY()];
+
+        //help
+    }
+}
+
+// there's definitely a better way to do this function (probably without function pointers)
+// but idk how to do it
+void Board::boardLoop(void (Board::*tileFcn)(const Point&, Tile&)) {
     for (int i = 0; i < m_boardSize; ++i) {
         for (int j = 0; j < m_boardSize; ++j) {
             Point currentPoint {i, j};
@@ -42,13 +61,8 @@ void Board::setTileNumbers() {
 
             for (int dir = 0; dir < Direction::max_directions; ++dir) {
                 Point adjPoint = currentPoint.getAdjacentPoint(static_cast<Direction::Type>(dir));
-
-                if (adjPoint.isValid()) {
-                    Tile& adjTile = m_board[adjPoint.getX()][adjPoint.getY()];
-
-                    if (adjTile.isMine() && !currentTile.isMine())
-                        currentTile.setNum(currentTile.getNum() + 1);
-                }
+                
+                (this->*tileFcn)(adjPoint, currentTile);
             }
         }
     }
@@ -65,7 +79,7 @@ int Board::revealTiles(const Point& p) {
     if (t.getNum())
         return t.getNum();
 
-    // figure out how to reveal all adjacent empty tiles
+    boardLoop(findAdjacentEmptyTiles);
 
     return 0;
 }
