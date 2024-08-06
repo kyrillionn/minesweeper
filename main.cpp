@@ -28,7 +28,8 @@ int main() {
         int tileNum = b.revealTiles(p);
 
         if (tileNum == -1) {
-            std::cout << b << "\n You lost.";
+            b.unhideAll();
+            std::cout << b << "\n You lost.\n";
             break;
         }
     }
