@@ -1,5 +1,6 @@
 #include "board.hpp"
 #include "point.hpp"
+#include "direction.hpp"
 
 std::ostream& operator<<(std::ostream& out, const Board& b) {
     out << "   ";
@@ -33,6 +34,26 @@ void Board::randomize() {
     }
 }
 
+void Board::setTileNumbers() {
+    for (int i = 0; i < m_boardSize; ++i) {
+        for (int j = 0; j < m_boardSize; ++j) {
+            Point currentPoint {i, j};
+            Tile& currentTile = m_board[i][j];
+
+            for (int dir = 0; dir < Direction::max_directions; ++dir) {
+                Point adjPoint = currentPoint.getAdjacentPoint(static_cast<Direction::Type>(dir));
+
+                if (adjPoint.isValid()) {
+                    Tile& adjTile = m_board[adjPoint.getX()][adjPoint.getY()];
+
+                    if (adjTile.isMine() && !currentTile.isMine())
+                        currentTile.setNum(currentTile.getNum() + 1);
+                }
+            }
+        }
+    }
+}
+
 int Board::revealTiles(const Point& p) {
     Tile& t = m_board[p.getX()][p.getY()];
 
@@ -47,4 +68,10 @@ int Board::revealTiles(const Point& p) {
     // figure out how to reveal all adjacent empty tiles
 
     return 0;
+}
+
+void Board::unhideAll() {
+    for (auto& row : m_board)
+        for (auto& tile : row)
+            tile.setHidden(false);
 }
