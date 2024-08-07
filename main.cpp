@@ -29,12 +29,12 @@ int main() {
 
         if (tileNum == -1) {
             b.unhideAll();
-            std::cout << b << "\n You lost.\n";
+            std::cout << b << "\nYou lost.";
             break;
         }
     }
 
-    std::cout << "Thank you for playing!";
+    std::cout << " Thank you for playing!";
 
     return 0;
 }
