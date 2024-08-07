@@ -9,13 +9,13 @@ class Board {
 public:
     Board() {
         randomize();
-        boardLoop(setNumbers);
+        setTileNumbers();
     }
 
     void randomize();
     static int getBoardSize() { return m_boardSize; };
     static int getMaxMines() { return m_maxMines; };
-    void boardLoop(void (Board::*)(const Point&, Tile&));
+    void setTileNumbers();
     int revealTiles(const Point& p);
     void unhideAll();
 
@@ -27,6 +27,5 @@ private:
 
     Tile m_board[m_boardSize][m_boardSize];
 
-    void setNumbers(const Point& adjPoint, Tile& currentTile);
-    void findAdjacentEmptyTiles(const Point& adjPoint, Tile& currentTile);
+    void findAdjacentEmptyTiles(Point p);
 };
