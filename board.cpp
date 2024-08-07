@@ -34,26 +34,24 @@ void Board::randomize() {
     }
 }
 
-void Board::setNumbers(const Point& adjPoint, Tile& currentTile) {
-    if (adjPoint.isValid()) {
-        Tile& adjTile = m_board[adjPoint.getX()][adjPoint.getY()];
+void Board::findAdjacentEmptyTiles(Point p) {
+    // this doesnt work help how do u do this
 
-        if (adjTile.isMine() && !currentTile.isMine())
-            currentTile.setNum(currentTile.getNum() + 1);
+    for (int dir = 0; dir < Direction::max_directions; ++dir) {
+        while (true) {
+            Tile& tile = m_board[p.getX()][p.getY()];
+
+            tile.setHidden(false);
+
+            if (!tile.isEmpty())
+                break;
+
+            p = p.getAdjacentPoint(static_cast<Direction::Type>(dir));
+        }
     }
 }
 
-void Board::findAdjacentEmptyTiles(const Point& adjPoint, Tile& currentTile) {
-    while (adjPoint.isValid()) {
-        Tile& adjTile = m_board[adjPoint.getX()][adjPoint.getY()];
-
-        //help
-    }
-}
-
-// there's definitely a better way to do this function (probably without function pointers)
-// but idk how to do it
-void Board::boardLoop(void (Board::*tileFcn)(const Point&, Tile&)) {
+void Board::setTileNumbers() {
     for (int i = 0; i < m_boardSize; ++i) {
         for (int j = 0; j < m_boardSize; ++j) {
             Point currentPoint {i, j};
@@ -62,7 +60,12 @@ void Board::boardLoop(void (Board::*tileFcn)(const Point&, Tile&)) {
             for (int dir = 0; dir < Direction::max_directions; ++dir) {
                 Point adjPoint = currentPoint.getAdjacentPoint(static_cast<Direction::Type>(dir));
                 
-                (this->*tileFcn)(adjPoint, currentTile);
+                if (adjPoint.isValid()) {
+                    Tile& adjTile = m_board[adjPoint.getX()][adjPoint.getY()];
+
+                    if (adjTile.isMine() && !currentTile.isMine())
+                        currentTile.setNum(currentTile.getNum() + 1);
+                }
             }
         }
     }
@@ -79,7 +82,7 @@ int Board::revealTiles(const Point& p) {
     if (t.getNum())
         return t.getNum();
 
-    boardLoop(findAdjacentEmptyTiles);
+    findAdjacentEmptyTiles(p);
 
     return 0;
 }
